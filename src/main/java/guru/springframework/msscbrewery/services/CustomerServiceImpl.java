@@ -22,4 +22,9 @@ public class CustomerServiceImpl implements CustomerService {
                 .customerName("New customer")
                 .build();
     }
+
+    @Override
+    public void updateCustomer(UUID customerId, CustomerDto customerDto) {
+
+    }
 }
