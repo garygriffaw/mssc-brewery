@@ -2,12 +2,16 @@ package guru.springframework.msscbrewery.web.controllers;
 
 import guru.springframework.msscbrewery.services.CustomerService;
 import guru.springframework.msscbrewery.web.model.CustomerDto;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/customer")
@@ -23,7 +27,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity createCustomer(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity createCustomer(@Validated @RequestBody CustomerDto customerDto) {
         CustomerDto savedDto = customerService.saveCustomer(customerDto);
 
         HttpHeaders headers = new HttpHeaders();
@@ -33,7 +37,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity updateCustomer(@PathVariable("customerId")UUID customerId, @RequestBody CustomerDto customerDto) {
+    public ResponseEntity updateCustomer(@PathVariable("customerId")UUID customerId, @Validated @RequestBody CustomerDto customerDto) {
         customerService.updateCustomer(customerId, customerDto);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);

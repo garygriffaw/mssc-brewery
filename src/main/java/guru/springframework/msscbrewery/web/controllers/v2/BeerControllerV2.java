@@ -2,12 +2,16 @@ package guru.springframework.msscbrewery.web.controllers.v2;
 
 import guru.springframework.msscbrewery.services.v2.BeerServiceV2;
 import guru.springframework.msscbrewery.web.model.v2.BeerDtoV2;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("/api/v2/beer")
@@ -24,7 +28,7 @@ public class BeerControllerV2 {
     }
 
     @PostMapping
-    public ResponseEntity createBeer(@RequestBody BeerDtoV2 beerDto) {
+    public ResponseEntity createBeer(@Validated @RequestBody BeerDtoV2 beerDto) {
 
         BeerDtoV2 savedDto = beerServiceV2.saveNewBeer(beerDto);
 
@@ -35,7 +39,7 @@ public class BeerControllerV2 {
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity updateBeer(@PathVariable("beerId") UUID beerId, @RequestBody BeerDtoV2 beerDto) {
+    public ResponseEntity updateBeer(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDtoV2 beerDto) {
 
         beerServiceV2.updateBeer(beerId, beerDto);
 
